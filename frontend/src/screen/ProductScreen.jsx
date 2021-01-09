@@ -7,8 +7,20 @@ import { detailsProduct } from '../action/product';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 class ProductScreen extends Component {
+    constructor() {
+        super();
+        this.state = {
+            qty: 1
+        }
+    }
+    setQty = (count) => {
+        this.setState({ qty: count });
+    }
     componentDidMount() {
         this.props.detailsProductAction();
+    }
+    addToCartHandler = () => {
+        this.props.history.push(`/cart/${this.props.product._id}?qty=${this.state.qty}`)
     }
     render() {
         const product = this.props.product;
@@ -47,9 +59,22 @@ class ProductScreen extends Component {
                                             </div>
 
                                         </li>
-                                        <li>
-                                            <button className="primary block">Add To Cart</button>
-                                        </li>
+                                        {product.countInStock > 0 && (<>
+                                            <li>
+                                                <div className="row">
+                                                    <div>Qty</div>
+                                                    <div>
+                                                        <select value={this.state.qty} onChange={(e => this.setQty(e.target.value))}>
+                                                            {[...Array(product.countInStock).keys()].map(x => (<option key={x + 1} value={x + 1}>{x + 1}</option>))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <button className="primary block" onClick={this.addToCartHandler}>Add To Cart</button>
+                                            </li>
+                                        </>)}
+
                                     </ul>
                                 </div>
                             </div>
