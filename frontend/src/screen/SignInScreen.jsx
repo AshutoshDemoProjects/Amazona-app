@@ -50,7 +50,7 @@ class SignInScreen extends Component {
                     <div><label /><button className="primary" type="submit">Sign In</button></div>
                     <div>
                         <label />
-                        <div>New User:{' '}<Link to='/register'>Create New Account</Link></div>
+                        <div>New User:{' '}<Link to={'/register?redirect=' + this.state.redirect}>Create New Account</Link></div>
                     </div>
                 </form>
             </div>
