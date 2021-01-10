@@ -1,7 +1,21 @@
+import bcrypt from 'bcrypt';
 const data = {
-    Products: [
+    users: [
         {
-            _id: 1,
+            name: 'Ashutosh',
+            email: 'admin@example.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: true,
+        },
+        {
+            name: 'john',
+            email: 'john@gmail.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: false,
+        }
+    ],
+    products: [
+        {
             name: 'Nike Fit Shirt',
             category: 'Shirt',
             image: '/images/p1.jpg',
@@ -13,7 +27,6 @@ const data = {
             description: 'High quality product'
         },
         {
-            _id: 2,
             name: 'adidas Fit Shirt',
             category: 'Shirt',
             image: '/images/p2.jpg',
@@ -25,8 +38,7 @@ const data = {
             description: 'High quality product'
         },
         {
-            _id: 3,
-            name: 'adidas Fit Shirt',
+            name: 'adidas Formal Shirt',
             category: 'Shirt',
             image: '/images/p3.jpg',
             price: 1300,
@@ -37,7 +49,6 @@ const data = {
             description: 'High quality product'
         },
         {
-            _id: 4,
             name: 'adidas Slim Pant',
             category: 'Pant',
             image: '/images/p4.jpg',
@@ -49,25 +60,23 @@ const data = {
             description: 'High quality product'
         },
         {
-            _id: 5,
-            name: 'adidas Slim Pant',
+            name: 'UCB Formal Pant',
             category: 'Pant',
             image: '/images/p5.jpg',
             price: 1350,
             countInStock: 5,
-            brand: 'Adidas',
+            brand: 'UCB',
             rating: 4.0,
             numReviews: 15,
             description: 'High quality product'
         },
         {
-            _id: 6,
-            name: 'adidas Slim Pant',
+            name: 'Nike Slim Pant',
             category: 'Pant',
             image: '/images/p6.jpg',
             price: 1350,
             countInStock: 0,
-            brand: 'Adidas',
+            brand: 'Nike',
             rating: 4.0,
             numReviews: 15,
             description: 'High quality product'
