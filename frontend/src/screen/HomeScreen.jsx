@@ -5,6 +5,17 @@ import LoadingBox from '../components/LoadingBox.jsx';
 import MessageBox from '../components/MessageBox.jsx';
 import { listProducts } from './../action/product';
 import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        products: state.productList.products,
+        loading: state.productList.loading,
+        error: state.productList.error
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return { listProductsAction: dispatch(listProducts()) }
+}
 class HomeScreen extends Component {
     /* 
         componentDidMount() {
@@ -34,14 +45,5 @@ class HomeScreen extends Component {
         );
     }
 }
-let mapStateToProps = (props) => {
-    return {
-        products: props.productList.products,
-        loading: props.productList.loading,
-        error: props.productList.error
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return { listProductsAction: dispatch(listProducts()) }
-}
+
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

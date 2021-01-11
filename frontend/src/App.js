@@ -9,6 +9,7 @@ import ProductScreen from './screen/ProductScreen';
 import CartScreen from './screen/CartScreen';
 import SignInScreen from './screen/SignInScreen';
 import RegisterScreen from './screen/RegisterScreen';
+import ShippingAddressScreen from './screen/ShippingAddressScreen';
 
 class App extends Component {
   signoutHandler = () => {
@@ -32,15 +33,16 @@ class App extends Component {
                   </ul>
                 </div>
               ) : (
-                  <Link to="/singin">SignIn</Link>
+                  <Link to="/signin">SignIn</Link>
                 )}
             </div>
           </header>
           <main>
             <Route path="/cart/:id?" component={CartScreen}></Route>
             <Route path="/product/:id" component={ProductScreen}></Route>
-            <Route path="/singin" component={SignInScreen}></Route>
+            <Route path="/signin" component={SignInScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
+            <Route path="/shipping" component={ShippingAddressScreen}></Route>
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
           <footer className="row center">@2021 copyright </footer>
@@ -69,6 +71,7 @@ import CartScreen from './screen/CartScreen';
 import { useSelector, connect } from 'react-redux';
 import SignInScreen from './screen/SignInScreen';
 import RegisterScreen from './screen/RegisterScreen';
+import ShippingAddressScreen from './screen/ShippingAddressScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);

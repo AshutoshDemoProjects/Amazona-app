@@ -5,6 +5,19 @@ import { signin } from './../action/user';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.userSignIn.userInfo,
+        loading: state.userSignIn.loading,
+        error: state.userSignIn.error
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signin: (email, password) => { dispatch(signin(email, password)) }
+    };
+};
+
 class SignInScreen extends Component {
     constructor(props) {
         super(props);
@@ -25,6 +38,7 @@ class SignInScreen extends Component {
     submitHandler = (e) => {
         e.preventDefault();
         this.props.signin(this.state.email, this.state.password);
+        this.props.history.push(this.state.redirect);
     }
 
     onChangeEmail = (e) => {
@@ -57,16 +71,5 @@ class SignInScreen extends Component {
         );
     }
 }
-const mapStateToProps = (props) => {
-    return {
-        userInfo: props.userSignIn.userInfo,
-        loading: props.userSignIn.loading,
-        error: props.userSignIn.error
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signin: (email, password) => { dispatch(signin(email, password)) }
-    };
-};
+
 export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);

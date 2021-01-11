@@ -3,6 +3,19 @@ import { addToCart, removeFromCart } from './../action/cart';
 import { connect } from 'react-redux';
 import MessageBox from './../components/MessageBox';
 import { Link } from 'react-router-dom';
+
+const mapStateToProps = (state) => {
+    return {
+        cart: state.cart
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addToCartAction: (id, qty) => { dispatch(addToCart(id, qty)) },
+        removeFromCartHandler: (id) => { dispatch(removeFromCart(id)) }
+    };
+};
+
 class CartScreen extends Component {
     constructor(props) {
         super(props);
@@ -67,15 +80,5 @@ class CartScreen extends Component {
         );
     }
 }
-const mapStateToProps = (props) => {
-    return {
-        cart: props.cart
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addToCartAction: (id, qty) => { dispatch(addToCart(id, qty)) },
-        removeFromCartHandler: (id) => { dispatch(removeFromCart(id)) }
-    };
-};
+
 export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);

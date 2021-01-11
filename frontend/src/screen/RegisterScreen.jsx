@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { register, signin } from '../action/user';
+import { register } from '../action/user';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.userSignIn.userInfo,
+        loading: state.userSignIn.loading,
+        error: state.userSignIn.error
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        register: (name, email, password) => { dispatch(register(name, email, password)) }
+    };
+};
 
 class RegisterScreen extends Component {
     constructor(props) {
@@ -30,6 +43,9 @@ class RegisterScreen extends Component {
             alert("Password And Confirm Password Not Same...");
         else
             this.props.register(this.state.name, this.state.email, this.state.password);
+        if (this.props.userInfo) {
+            this.props.history.push(this.state.redirect);
+        }
     }
     onChangeName = (e) => {
         this.setState({ name: e.target.value });
@@ -48,7 +64,7 @@ class RegisterScreen extends Component {
             <div>
                 <form className="form" onSubmit={this.submitHandler}>
                     <div>
-                        <h1>Register</h1>
+                        <h1>Create Account</h1>
                     </div>
                     {this.props.loading && <LoadingBox></LoadingBox>}
                     {this.props.error && <MessageBox variant="danger">{this.props.error}</MessageBox>}
@@ -66,7 +82,7 @@ class RegisterScreen extends Component {
                     </div>
                     <div>
                         <label htmlFor="txtConfirmPassword">Confirm Password</label>
-                        <input type="password" id="txtConfirmPassword" placeholder="Enter COnfirm Password" value={this.state.confirmPassword} onChange={this.onChangeConfirmPassword} />
+                        <input type="password" id="txtConfirmPassword" placeholder="Enter Confirm Password" value={this.state.confirmPassword} onChange={this.onChangeConfirmPassword} />
                     </div>
                     <div><label /><button className="primary" type="submit">Reginstration</button></div>
                     <div>
@@ -78,16 +94,5 @@ class RegisterScreen extends Component {
         );
     }
 }
-const mapStateToProps = (props) => {
-    return {
-        userInfo: props.userSignIn.userInfo,
-        loading: props.userSignIn.loading,
-        error: props.userSignIn.error
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        register: (name, email, password) => { dispatch(register(name, email, password)) }
-    };
-};
+
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen);

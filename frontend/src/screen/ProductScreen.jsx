@@ -6,6 +6,18 @@ import { connect } from 'react-redux';
 import { detailsProduct } from '../action/product';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
+
+const mapStateToProps = (state) => {
+    return {
+        product: state.productDetails.product,
+        loading: state.productDetails.loading,
+        error: state.productDetails.error
+    };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return { detailsProductAction: () => { dispatch(detailsProduct(ownProps.match.params.id)); } }
+}
+
 class ProductScreen extends Component {
     constructor() {
         super();
@@ -83,14 +95,5 @@ class ProductScreen extends Component {
         }</div>);
     }
 }
-let mapStateToProps = (props) => {
-    return {
-        product: props.productDetails.product,
-        loading: props.productDetails.loading,
-        error: props.productDetails.error
-    };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return { detailsProductAction: () => { dispatch(detailsProduct(ownProps.match.params.id)); } }
-}
+
 export default connect(mapStateToProps, mapDispatchToProps)(ProductScreen);
