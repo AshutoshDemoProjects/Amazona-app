@@ -10,6 +10,7 @@ import CartScreen from './screen/CartScreen';
 import SignInScreen from './screen/SignInScreen';
 import RegisterScreen from './screen/RegisterScreen';
 import ShippingAddressScreen from './screen/ShippingAddressScreen';
+import PaymentMethodScreen from './screen/PaymentMethodScreen';
 
 class App extends Component {
   signoutHandler = () => {
@@ -43,6 +44,7 @@ class App extends Component {
             <Route path="/signin" component={SignInScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/shipping" component={ShippingAddressScreen}></Route>
+            <Route path="/payment" component={PaymentMethodScreen}></Route>
             <Route path="/" component={HomeScreen} exact></Route>
           </main>
           <footer className="row center">@2021 copyright </footer>

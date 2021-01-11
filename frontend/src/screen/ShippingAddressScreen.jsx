@@ -27,6 +27,10 @@ class ShippingAddressScreen extends Component {
             country: this.props.shippingAddress.country,
         }
     }
+    componentDidMount() {
+        if (!this.props.userInfo)
+            this.props.history.push('/signin')
+    }
     submitHandler = (e) => {
         e.preventDefault();
         const { fullName, address, city, postalcode, country } = this.state;
@@ -49,8 +53,7 @@ class ShippingAddressScreen extends Component {
         this.setState({ country: e.target.value });
     }
     render() {
-        if (!this.props.userInfo)
-            this.props.history.push('/signin')
+
         return (
             <div>
                 <CheckoutSteps step1 step2></CheckoutSteps>
