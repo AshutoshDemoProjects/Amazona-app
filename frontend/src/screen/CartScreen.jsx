@@ -56,7 +56,7 @@ class CartScreen extends Component {
                                                 {[...Array(item.countInStock).keys()].map(x => (<option key={x + 1} value={x + 1}>{x + 1}</option>))}
                                             </select>
                                         </div>
-                                        <div>{item.price}</div>
+                                        <div> &#8377; {item.price}</div>
                                         <div><button type="button" onClick={() => this.removeFromCartHandler(item.product)}>delete</button></div>
                                     </div>
                                 </li>
@@ -68,7 +68,7 @@ class CartScreen extends Component {
                     <div className="card card-body">
                         <ul>
                             <li>
-                                <h2>subtotal ({this.props.cart.cartItems.reduce((a, c) => a + c.qty, 0)} items): {this.props.cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0)}</h2>
+                                <h2>subtotal ({this.props.cart.cartItems.reduce((a, c) => a + c.qty, 0)} items): &#8377; {this.props.cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0)}</h2>
                             </li>
                             <li><button className="primary block" type="button" onClick={this.checkOutHandler} disabled={this.props.cart.cartItems.length === 0}>
                                 Proceed to checkout
