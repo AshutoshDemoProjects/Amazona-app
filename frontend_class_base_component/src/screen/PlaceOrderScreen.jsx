@@ -24,6 +24,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 class PlaceOrderScreen extends Component {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.success !== this.props.success) {
+            this.props.history.push(`/order/${nextProps.order._id}`);
+            this.props.resetOrder();
+        }
+    }
     componentDidMount() {
         if (!this.props.cart.paymentMethod) {
             this.props.history.push('/payment');
@@ -33,10 +39,7 @@ class PlaceOrderScreen extends Component {
     toPrice = (num) => Number(num.toFixed(2));
     placeOrderHandler = () => {
         this.props.createOrder({ ...this.props.cart, orderItems: this.props.cart.cartItems });
-        if (this.props.success) {
-            this.props.history.push(`/order/${this.props.order._id}`);
-            this.props.resetOrder();
-        }
+
     }
     render() {
         const cart = this.props.cart;

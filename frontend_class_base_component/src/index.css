@@ -34,6 +34,7 @@ main{
 footer{
   grid-area: footer;
   background-color: #203040;
+  color: #ffffff;
 }
 /*comman*/
 h1{
@@ -184,6 +185,10 @@ img.large{
 }
 .alert-danger{
   color: #a02020;
+  background-color: #ffe0e0;
+}
+.alert-success{
+  color: #20a020;
   background-color: #ffe0e0;
 }
 /*Form*/

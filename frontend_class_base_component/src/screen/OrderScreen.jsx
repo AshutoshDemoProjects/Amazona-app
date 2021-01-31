@@ -1,28 +1,83 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder } from '../action/order';
+import Axios from 'axios';
+import { PayPalButton } from 'react-paypal-button-v2'
+import { detailsOrder, payOrder } from '../action/order';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { ORDER_PAY_RESET } from '../constants/order';
 
 function mapStateToProps(state) {
     return {
         order: state.orderDetails.order,
         loading: state.orderDetails.loading,
-        error: state.orderDetails.error
+        error: state.orderDetails.error,
+        errorPay: state.orderPay.error,
+        successPay: state.orderPay.success,
+        loadingPay: state.orderPay.loading
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        detailsOrder: (id) => dispatch(detailsOrder(id))
+        detailsOrder: (id) => dispatch(detailsOrder(id)),
+        payOrder: (ordre, paymentRsult) => dispatch(payOrder(ordre, paymentRsult)),
+        payReset: () => dispatch({ type: ORDER_PAY_RESET })
     };
 }
 
 class OrderScreen extends Component {
-    componentDidMount() {
-        this.props.detailsOrder(this.props.match.params.id)
+    constructor(props) {
+        super(props);
+        this.state = {
+            sdkReady: false
+        }
     }
+    successPaymentHandler = (paymentRsult) => {
+        this.props.payOrder(this.props.order, paymentRsult);
+    }
+
+    setSdkReady = (val) => {
+        this.setState({ sdkReady: val });
+    }
+    addPayPalScript = async () => {
+        const { data } = await Axios.get('/api/config/paypal');
+        const script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = `https://www.paypal.com/sdk/js?client-id=${data}&currency=INR`;
+        script.async = true;
+        script.onload = () => {
+            this.setSdkReady(true);
+        }
+        document.body.appendChild(script);
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.order !== this.props.order)
+            if (!this.props.order.isPaid) {
+                if (!window.paypal) {
+                    this.addPayPalScript();
+                } else {
+                    this.setSdkReady(true);
+                }
+            }
+
+    }
+    componentWillMount() {
+        if (!this.props.order || this.props.successPay || (this.props.order._id !== this.props.match.params.id)) {
+            this.props.payReset();
+            this.props.detailsOrder(this.props.match.params.id);
+        }
+    }
+    /* shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.loading === nextProps.loading || this.state.sdkReady === nextState.sdkReady) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    } */
+
     render() {
         const order = this.props.order;
         return this.props.loading ? (<LoadingBox></LoadingBox>) :
@@ -109,7 +164,15 @@ class OrderScreen extends Component {
                                             <div><strong>&#8377; {order.totalPrice}</strong></div>
                                         </div>
                                     </li>
-
+                                    {!order.isPaid && (<li>
+                                        {!this.state.sdkReady ? (<LoadingBox></LoadingBox>) : (
+                                            <>
+                                                {this.props.errorPay && (<MessageBox variant="danger">{this.props.errorPay}</MessageBox>)}
+                                                {this.props.loadingPay && (<LoadingBox></LoadingBox>)}
+                                                <PayPalButton amount={order.totalPrice} currency="INR" onSuccess={this.successPaymentHandler}></PayPalButton>
+                                            </>
+                                        )}
+                                    </li>)}
                                 </ul>
                             </div>
                         </div>
