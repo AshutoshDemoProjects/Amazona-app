@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CheckoutSteps from './../components/CheckoutSteps';
-import { savePaymentMethod } from './../action/cart';
+import { savePaymentMethod } from './../action/cartAction';
 
 function mapStateToProps(state) {
     return {

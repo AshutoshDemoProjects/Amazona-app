@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { signout } from './action/user';
+import { signout } from './action/userAction';
 
 import HomeScreen from './screen/HomeScreen';
 import ProductScreen from './screen/ProductScreen';

@@ -1,75 +1,55 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signin } from './../action/user';
-import LoadingBox from './../components/LoadingBox';
+import { signin } from '../action/userActions';
+import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
-const mapStateToProps = (state) => {
-    return {
-        userInfo: state.userSignIn.userInfo,
-        loading: state.userSignIn.loading,
-        error: state.userSignIn.error
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signin: (email, password) => { dispatch(signin(email, password)) }
-    };
-};
+export default function SigninScreen(props) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const redirect = props.location.search
+        ? props.location.search.split('=')[1]
+        : '/';
 
-class SignInScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            redirect: this.props.location.search
-                ? this.props.location.search.split('=')[1]
-                : '/'
-        }
-    }
-    componentDidMount() {
-        if (this.props.userInfo) {
-            this.props.history.push(this.state.redirect);
-        }
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo, loading, error } = userSignin;
 
-    }
-    submitHandler = (e) => {
+    const dispatch = useDispatch();
+    const submitHandler = (e) => {
         e.preventDefault();
-        this.props.signin(this.state.email, this.state.password);
-        this.props.history.push(this.state.redirect);
-    }
-
-    onChangeEmail = (e) => {
-        this.setState({ email: e.target.value });
-    }
-    onChangePassword = (e) => {
-        this.setState({ password: e.target.value });
-    }
-    render() {
-        return (
-            <div>
-                <form className="form" onSubmit={this.submitHandler}>
-                    <div>
-                        <h1>Sing In</h1>
-                    </div>
-                    {this.props.loading && <LoadingBox></LoadingBox>}
-                    {this.props.error && <MessageBox variant="danger">{this.props.error}</MessageBox>}
-                    <div>
-                        <label htmlFor="txtEmail">Email Address</label>
-                        <input type="email" id="txtEmail" value={this.state.email} onChange={this.onChangeEmail} />
-                    </div>
-                    <div><label htmlFor="txtPassword">Password</label><input type="password" id="txtPassword" value={this.state.password} onChange={this.onChangePassword} /></div>
-                    <div><label /><button className="primary" type="submit">Sign In</button></div>
-                    <div>
-                        <label />
-                        <div>New User:{' '}<Link to={'/register?redirect=' + this.state.redirect}>Create New Account</Link></div>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+        dispatch(signin(email, password));
+    };
+    useEffect(() => {
+        if (userInfo) {
+            props.history.push(redirect);
+        }
+    }, [props.history, redirect, userInfo]);
+    return (
+        <div>
+            <form className="form" onSubmit={submitHandler}>
+                <div>
+                    <h1>Sign In</h1>
+                </div>
+                {loading && <LoadingBox></LoadingBox>}
+                {error && <MessageBox variant="danger">{error}</MessageBox>}
+                <div>
+                    <label htmlFor="email">Email address</label>
+                    <input type="email" id="email" placeholder="Enter email" required onChange={(e) => setEmail(e.target.value)} ></input>
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required onChange={(e) => setPassword(e.target.value)}></input>
+                </div>
+                <div>
+                    <label />
+                    <button className="primary" type="submit">Sign In</button>
+                </div>
+                <div>
+                    <label />
+                    <div>New customer?{' '}<Link to={`/register?redirect=${redirect}`}>Create your account</Link></div>
+                </div>
+            </form>
+        </div>
+    );
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);

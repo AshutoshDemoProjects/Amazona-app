@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signin } from './../action/user';
+import { signin } from './../action/userAction';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 

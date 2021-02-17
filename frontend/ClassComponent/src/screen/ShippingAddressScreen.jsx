@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { saveShippingAddress } from './../action/cart';
+import { saveShippingAddress } from './../action/cartAction';
 
 function mapStateToProps(state) {
     return {

@@ -1,58 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import CheckoutSteps from './../components/CheckoutSteps';
-import { savePaymentMethod } from './../action/cart';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { savePaymentMethod } from '../action/cartActions';
+import CheckoutSteps from '../components/CheckoutSteps';
 
-function mapStateToProps(state) {
-    return {
-        shippingAddress: state.cart.shippingAddress
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        paymentMethod: (paymentMethod) => { dispatch(savePaymentMethod(paymentMethod)) }
-    };
-}
-
-class PaymentMethodScreen extends Component {
-    constructor() {
-        super();
-        this.state = {
-            paymentMethod: 'PayPal'
-        }
+export default function PaymentMethodScreen(props) {
+    const cart = useSelector((state) => state.cart);
+    const { shippingAddress } = cart;
+    if (!shippingAddress.address) {
+        props.history.push('/shipping');
     }
-    componentDidMount() {
-        if (!this.props.shippingAddress.address)
-            this.props.history.push('/shipping')
-    }
-    submitHandler = (e) => {
+    const [paymentMethod, setPaymentMethod] = useState('PayPal');
+    const dispatch = useDispatch();
+    const submitHandler = (e) => {
         e.preventDefault();
-        this.props.paymentMethod(this.state.paymentMethod)
-        this.props.history.push('/placeorder');
-    }
-    onChangePaymentMethod = (e) => {
-        this.setState({ paymentMethod: e.target.value });
-    }
-    render() {
-        return (
-            <div>
-                <CheckoutSteps step1 step2 step3></CheckoutSteps>
-                <form className="form" onSubmit={this.submitHandler}>
+        dispatch(savePaymentMethod(paymentMethod));
+        props.history.push('/placeorder');
+    };
+    return (
+        <div>
+            <CheckoutSteps step1 step2 step3></CheckoutSteps>
+            <form className="form" onSubmit={submitHandler}>
+                <div>
+                    <h1>Payment Method</h1>
+                </div>
+                <div>
                     <div>
-                        <h1>Payment</h1>
+                        <input type="radio" id="paypal" value="PayPal" name="paymentMethod" required checked onChange={(e) => setPaymentMethod(e.target.value)}></input>
+                        <label htmlFor="paypal">PayPal</label>
                     </div>
+                </div>
+                <div>
                     <div>
-                        <div><input type="radio" id="paypal" value="PayPal" name="paymentMethod" required checked onChange={this.onChangePaymentMethod} /><label htmlFor="paypal">PayPal</label></div>
+                        <input type="radio" id="stripe" value="Stripe" name="paymentMethod" required onChange={(e) => setPaymentMethod(e.target.value)}></input>
+                        <label htmlFor="stripe">Stripe</label>
                     </div>
-                    <div>
-                        <div><input type="radio" id="stripe" value="Stripe" name="paymentMethod" required onChange={this.onChangePaymentMethod} /><label htmlFor="stripe">Stripe</label></div>
-                    </div>
-                    <div><button type="submit" className="primary">Continue</button></div>
-                </form>
-            </div>
-        );
-    }
+                </div>
+                <div>
+                    <label />
+                    <button className="primary" type="submit">Continue</button>
+                </div>
+            </form>
+        </div>
+    );
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentMethodScreen);

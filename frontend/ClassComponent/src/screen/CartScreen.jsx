@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addToCart, removeFromCart } from './../action/cart';
+import { addToCart, removeFromCart } from './../action/cartAction';
 import { connect } from 'react-redux';
 import MessageBox from './../components/MessageBox';
 import { Link } from 'react-router-dom';

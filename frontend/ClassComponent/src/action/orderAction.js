@@ -9,9 +9,9 @@ import {
     ORDER_PAY_REQUEST,
     ORDER_PAY_SUCCESS,
     ORDER_PAY_FAIL
-} from './../constants/order';
+} from '../constants/orderConstants';
 import Axios from 'axios';
-import { CART_EMPTY } from "../constants/cart";
+import { CART_EMPTY } from "../constants/cartConstants";
 export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_REQUEST, payloar: order });
     try {

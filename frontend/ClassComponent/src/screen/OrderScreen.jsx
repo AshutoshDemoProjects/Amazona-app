@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2'
-import { detailsOrder, payOrder } from '../action/order';
+import { detailsOrder, payOrder } from '../action/orderAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { ORDER_PAY_RESET } from '../constants/order';
+import { ORDER_PAY_RESET } from '../constants/orderConstants';
 
 function mapStateToProps(state) {
     return {

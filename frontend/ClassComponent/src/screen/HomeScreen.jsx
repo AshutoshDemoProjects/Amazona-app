@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Product from '../components/Product.jsx';
 import LoadingBox from '../components/LoadingBox.jsx';
 import MessageBox from '../components/MessageBox.jsx';
-import { listProducts } from './../action/product';
+import { listProducts } from './../action/productAction';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {

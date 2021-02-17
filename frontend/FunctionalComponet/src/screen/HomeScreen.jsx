@@ -1,49 +1,30 @@
-import React, { Component } from 'react';
-/* import axios from 'axios'; */
+import React, { useEffect } from 'react';
 import Product from '../components/Product.jsx';
 import LoadingBox from '../components/LoadingBox.jsx';
 import MessageBox from '../components/MessageBox.jsx';
-import { listProducts } from './../action/product';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProducts } from '../action/productActions';
 
-const mapStateToProps = (state) => {
-    return {
-        products: state.productList.products,
-        loading: state.productList.loading,
-        error: state.productList.error
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return { listProductsAction: dispatch(listProducts()) }
+export default function HomeScreen() {
+    const dispatch = useDispatch();
+    const productList = useSelector((state) => state.productList);
+    const { loading, error, products } = productList;
+    useEffect(() => {
+        dispatch(listProducts());
+    }, [dispatch]);
+    return (
+        <div>
+            {loading ? (
+                <LoadingBox></LoadingBox>
+            ) : error ? (
+                <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
+                        <div className="row center">
+                            {products.map((product) => (
+                                <Product key={product._id} product={product}></Product>
+                            ))}
+                        </div>
+                    )}
+        </div>
+    );
 }
-class HomeScreen extends Component {
-    /* 
-        componentDidMount() {
-            const fecthData = async () => {
-                try {
-                    this.setState({ loading: true });
-                    const { data } = await axios.get("http://localhost:5000/api/products");
-                    this.setState({ products: data.Products, loading: false });
-                }
-                catch (err) {
-                    this.setState({ error: err.message, loading: false });
-                }
-            };
-            fecthData();
-        } */
-    render() {
-        return (
-            <div>
-                {
-                    this.props.loading ? (<LoadingBox></LoadingBox>) :
-                        this.props.error ? (<MessageBox variant="danger">{this.state.error}</MessageBox>)
-                            : (<div className="row center">
-                                {this.props.products.map((product) => (<Product key={product._id} product={product} />))}
-                            </div>)
-                }
-            </div>
-        );
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

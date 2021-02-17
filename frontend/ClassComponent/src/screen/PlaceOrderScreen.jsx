@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, orderReset } from '../action/order';
+import { createOrder, orderReset } from '../action/orderAction';
 import CheckoutSteps from './../components/CheckoutSteps';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';

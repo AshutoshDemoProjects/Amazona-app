@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class CheckoutSteps extends Component {
-    render() {
-        return (
-            <div className="row checkout-steps">
-                <div className={this.props.step1 ? 'active' : ''}>SignIn</div>
-                <div className={this.props.step2 ? 'active' : ''}>Shipping</div>
-                <div className={this.props.step3 ? 'active' : ''}>Payment</div>
-                <div className={this.props.step4 ? 'active' : ''}>Place Order</div>
-            </div>
-        );
-    }
+export default function CheckoutSteps(props) {
+    return (
+        <div className="row checkout-steps">
+            <div className={props.step1 ? 'active' : ''}>SignIn</div>
+            <div className={props.step2 ? 'active' : ''}>Shipping</div>
+            <div className={props.step3 ? 'active' : ''}>Payment</div>
+            <div className={props.step4 ? 'active' : ''}>Place Order</div>
+        </div>
+    );
+
 }
-
-export default CheckoutSteps;

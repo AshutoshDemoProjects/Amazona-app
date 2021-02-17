@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { register } from '../action/user';
+import { register } from '../action/userAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 

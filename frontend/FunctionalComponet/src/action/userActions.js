@@ -1,5 +1,5 @@
-import { USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT } from "../constants/user";
-import { USER_SIGNIN_FAIL, USER_REGISTER_SUCCESS } from './../constants/user';
+import { USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT } from "../constants/userConstants";
+import { USER_SIGNIN_FAIL, USER_REGISTER_SUCCESS } from '../constants/userConstants';
 import Axios from 'axios';
 
 export const signin = (email, password) => async (dispatch) => {

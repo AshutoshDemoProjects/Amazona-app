@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
 /* import data from './../data'; */
 import { connect } from 'react-redux';
-import { detailsProduct } from '../action/product';
+import { detailsProduct } from '../action/productAction';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 
