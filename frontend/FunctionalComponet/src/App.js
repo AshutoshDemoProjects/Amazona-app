@@ -28,6 +28,7 @@ import SearchBox from './components/SearchBox';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import { listProductCategories } from './action/productActions';
+import MapScreen from './screen/MapScreen';
 
 export default function App() {
   const cart = useSelector(state => state.cart);
@@ -121,6 +122,7 @@ export default function App() {
           <Route path="/search/category/:category/name/:name" component={SearchScreen} exact></Route>
           <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order" component={SearchScreen} exact></Route>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
+          <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
           <AdminRoute path="/productlist" component={ProductListScreen} exact></AdminRoute>
           <AdminRoute path="/orderlist" component={OrderListScreen} exact></AdminRoute>
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
