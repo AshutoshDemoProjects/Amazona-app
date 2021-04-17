@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { productCategoryListReducer, productDeleteReducer, productDetailsReducer, productListReducer, productReviewCreateReducer, productUpdateReducer } from '../reducer/productReducer';
 import { userAddressMapReducer, userDeleteReducer, userListReducer, userRegisterReducer, userSignInReducer, userTopSellerListReducer, userUpdateProfileReducer, userUpdateReducer } from '../reducer/userReducer';
 import { cartReducer } from './../reducer/cartReducer';
-import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer } from './../reducer/orderReducer';
+import { orderCreateReducer, orderDeleteReducer, orderDeliverReducer, orderDetailsReducer, orderListReducer, orderMineListReducer, orderPayReducer, orderSummaryReducer } from './../reducer/orderReducer';
 import { userDetailsReducer } from './../reducer/userReducer';
 import { productCreateReducer } from './../reducer/productReducer';
 
@@ -47,6 +47,7 @@ const reducer = combineReducers({
     productCategoryList: productCategoryListReducer,
     productReviewCreate: productReviewCreateReducer,
     userAddressMap: userAddressMapReducer,
+    orderSummary: orderSummaryReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));

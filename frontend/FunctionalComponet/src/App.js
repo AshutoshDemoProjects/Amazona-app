@@ -29,6 +29,7 @@ import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import { listProductCategories } from './action/productActions';
 import MapScreen from './screen/MapScreen';
+import DashboardScreen from './screen/DashboardScreen';
 
 export default function App() {
   const cart = useSelector(state => state.cart);
@@ -84,7 +85,7 @@ export default function App() {
               <div className="dropdown">
                 <Link to="#">Admin <i className="fa fa-caret-down"></i></Link>
                 <ul className="dropdown-content">
-                  <li><Link to="/dashbord">Dashbord</Link></li>
+                  <li><Link to="/dashboard">Dashboard</Link></li>
                   <li><Link to="/productlist">Products</Link></li>
                   <li><Link to="/orderlist">Orders</Link></li>
                   <li><Link to="/userlist">Users</Link></li>
@@ -127,6 +128,7 @@ export default function App() {
           <AdminRoute path="/orderlist" component={OrderListScreen} exact></AdminRoute>
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} ></AdminRoute>
+          <AdminRoute path="/dashboard" component={DashboardScreen} ></AdminRoute>
           <SellerRoute path="/productlist/seller" component={ProductListScreen} ></SellerRoute>
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} ></SellerRoute>
           <SellerRoute path="/product/:id/edit" component={ProductEditScreen}></SellerRoute>
