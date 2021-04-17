@@ -30,6 +30,8 @@ import MessageBox from './components/MessageBox';
 import { listProductCategories } from './action/productActions';
 import MapScreen from './screen/MapScreen';
 import DashboardScreen from './screen/DashboardScreen';
+import ChatBox from './components/ChatBox';
+import SupportScreen from './screen/SupportScreen';
 
 export default function App() {
   const cart = useSelector(state => state.cart);
@@ -89,6 +91,7 @@ export default function App() {
                   <li><Link to="/productlist">Products</Link></li>
                   <li><Link to="/orderlist">Orders</Link></li>
                   <li><Link to="/userlist">Users</Link></li>
+                  <li><Link to="/support">Support</Link></li>
                 </ul>
               </div>
             )}
@@ -129,12 +132,16 @@ export default function App() {
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} ></AdminRoute>
           <AdminRoute path="/dashboard" component={DashboardScreen} ></AdminRoute>
+          <AdminRoute path="/support" component={SupportScreen}></AdminRoute>
           <SellerRoute path="/productlist/seller" component={ProductListScreen} ></SellerRoute>
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} ></SellerRoute>
           <SellerRoute path="/product/:id/edit" component={ProductEditScreen}></SellerRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
-        <footer className="row center">@2021 copyright </footer>
+        <footer className="row center">
+          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+          <div>All right reserved</div>{' '}
+        </footer>
       </div>
     </BrowserRouter >
   );
